@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main_container">
+        <div class="music_container">
+            <h2 class="song">TUNE JO NA KAHA</h2>
+            <h3 class="artist">Mohit Chauhan</h3>
+            <div class="image_container">
+                <img src="Images/music1.jpg" alt="">
+            </div>
+            <audio src="Music/music1.mp3"></audio>
+
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="previous"></i>
+                <i class="fas fa-play" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const music = document.querySelector('audio');
+        const img = document.querySelector('img');
+        const play = document.getElementById('play');
+        const titles = document.querySelector('h2');
+        const artists = document.querySelector('h3');
+        const playn = document.getElementById('next');
+        const playp = document.getElementById('prev');
+        let isplaying=false;
+
+        const songs = [{
+            name:"music1",
+            title:"TUNE JO NA KAHA",
+            artist:"Mohit Chauhan",
+        },
+        {
+            name:"music2",
+            title:"MAINE KHUD KO",
+            artist:"Mustafa Zahid",
+        },
+        {
+            name:"music3",
+            title:"TERA DEEDAR HUA",
+            artist:"Javed Ali and Pritam Chakraborty",
+        },
+        {
+            name:"music4",
+            title:"ISHQ DI BAAZIYAAN",
+            artist:"Diljit Dosanjh",
+        },
+        {
+            name:"music5",
+            title:"JEENA JEENA",
+            artist:"Atif Aslam",
+        },
+        {
+            name:"music6",
+            title:"DARASAL",
+            artist:"Atif Aslam",
+        },
+        {
+            name:"music7",
+            title:"ISHQ BHI KIYA RE MAULA",
+            artist:"Ali Azmat",
+        }
+        ];
+        const playmusic=()=>{
+            isplaying = true;
+            music.play();
+            
+            play.classList.replace('fa-play','fa-pause');
+            img.classList.add('anime');
+        }
+
+
+        const pausemusic=()=>{
+            isplaying=false;
+            music.pause();
+            play.classList.replace('fa-pause','fa-play');
+            img.classList.remove('anime');
+        }
+
+
+        play.addEventListener('click',()=>{
+            if(isplaying){
+                pausemusic();
+            }
+            else{
+                playmusic();
+            }
+        });
+
+        const loadsongs = (songs) => {
+            titles.textContent=songs.title;
+            artists.textContent=songs.artist;
+            music.src="Music/"+songs.name+".mp3";
+            img.src="Images/"+songs.name+".jpg";
+        };
+        //loadsongs(songs);
+        songIndex=0;
+        const nextsong = () => {
+            songIndex=(songIndex+1)%songs.length;
+            loadsongs(songs[songIndex]);
+            playmusic();
+        };
+
+        const prevsong = () => {
+            songIndex=(songIndex-1 +songs.length)%songs.length;
+            loadsongs(songs[songIndex]);
+            playmusic();
+        };
+
+
+        playn.addEventListener('click',nextsong);
+        playp.addEventListener('click',prevsong);
+    </script>
+</body>
+</html>
